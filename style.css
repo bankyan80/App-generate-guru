@@ -9,30 +9,24 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
+    margin: 20px auto;
+    padding: 20px;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
 }
 
 header {
     background-color: #007bff;
     color: white;
-    padding: 20px 15px;
+    padding: 20px;
     text-align: center;
+    border-radius: 8px 8px 0 0;
 }
 
 header h1 {
+    font-size: 2em;
     margin: 0;
-    font-size: 1.8em;
-}
-
-header p {
-    margin: 5px 0 0;
-}
-
-.content-wrapper {
-    padding: 15px;
 }
 
 h2, h3 {
@@ -42,23 +36,25 @@ h2, h3 {
 /* Tab Navigation */
 .tabs {
     display: flex;
-    background-color: #f8f9fa;
     border-bottom: 2px solid #dee2e6;
-    overflow-x: auto; /* Memungkinkan scroll tab jika tidak muat */
-    -webkit-overflow-scrolling: touch; /* Scroll halus di iOS */
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
 }
 
 .tab-link {
     background-color: transparent;
     border: none;
-    padding: 15px;
+    padding: 15px 25px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 1.1em;
     transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
     color: #495057;
+    flex-grow: 1;
     text-align: center;
-    white-space: nowrap; /* Mencegah teks menu patah ke bawah */
-    flex-shrink: 0; /* Mencegah tab menyusut */
+    white-space: nowrap;
 }
 
 .tab-link:hover {
@@ -76,12 +72,10 @@ h2, h3 {
 .tab-content {
     display: none;
 }
-
 .tab-content.active {
     display: block;
     animation: fadeIn 0.5s;
 }
-
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -118,23 +112,51 @@ button {
     font-size: 1em;
     transition: background-color 0.3s;
 }
-
 button:hover {
     background-color: #0056b3;
 }
-
 button.delete-btn {
     background-color: #dc3545;
     padding: 8px 12px;
 }
 
+/* == STYLING TABEL DEFAULT UNTUK DESKTOP (KODE DIPERBAIKI) == */
+.table-container {
+    overflow-x: auto;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table thead {
+    display: table-header-group; /* Pastikan header selalu tampil di desktop */
+    background-color: #007bff;
+    color: white;
+}
+table tr {
+    display: table-row; /* Pastikan baris tampil normal di desktop */
+}
+table th, table td {
+    display: table-cell; /* Pastikan sel tampil normal di desktop */
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+/* Menghilangkan pseudo-element di desktop */
+table td::before {
+    display: none;
+}
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
 /* Document Generation */
 .doc-list {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
 }
-
 .doc-item {
     background: #f8f9fa;
     padding: 20px;
@@ -142,121 +164,113 @@ button.delete-btn {
     border: 1px solid #e9ecef;
     text-align: center;
 }
-
 .doc-item button {
     margin: 5px;
 }
-
 .preview-container {
     margin-top: 30px;
-    padding: 10px;
+    padding: 20px;
     border: 1px dashed #ccc;
     border-radius: 8px;
-    min-height: 200px;
+    min-height: 300px;
     overflow-x: auto;
 }
-
-/* Document Preview Styling */
 .doc-preview {
-    padding: 10px;
+    border: 1px solid #ccc;
+    padding: 20px;
     background: white;
 }
 .doc-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid black;
     padding-bottom: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 .doc-header img {
-    max-width: 50px;
-    max-height: 50px;
+    max-width: 80px;
+    max-height: 80px;
 }
 .doc-header-text {
     text-align: center;
     flex-grow: 1;
-    padding: 0 10px;
 }
 .doc-header-text h4, .doc-header-text p {
     margin: 0;
-    font-size: 0.8em;
 }
-.doc-header-text h3 {
-    font-size: 1em;
+.doc-title {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-transform: uppercase;
 }
-
 .info-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
-    margin-bottom: 15px;
-    background: #f8f9fa;
-    padding: 10px;
-    border-radius: 4px;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 20px;
+}
+.info-grid div {
+    padding: 5px;
 }
 
-/* Responsive Table Styling (The Magic for Mobile!) */
+/* == PENYESUAIAN KHUSUS UNTUK MOBILE (Layar <= 768px) == */
 @media screen and (max-width: 768px) {
     .container {
+        margin: 0;
+        padding: 10px;
         box-shadow: none;
         border-radius: 0;
     }
-
+    header h1 {
+        font-size: 1.6em;
+    }
+    .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .tab-link {
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 1em;
+    }
     .doc-list {
         grid-template-columns: 1fr;
     }
-
-    table {
-        border: 0;
+    .info-grid {
+        grid-template-columns: 1fr;
     }
-
-    table thead {
-        display: none; /* Sembunyikan header tabel di mobile */
+    
+    /* Mengubah Tampilan Tabel Siswa menjadi Kartu di Mobile */
+    #tabel-siswa thead {
+        display: none;
     }
-
-    table tr {
+    #tabel-siswa tr {
         display: block;
         margin-bottom: 15px;
         border: 1px solid #ddd;
         border-radius: 4px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-
-    table td {
+    #tabel-siswa td {
         display: block;
-        text-align: right; /* Posisikan data di kanan */
-        padding: 8px 12px;
+        text-align: right;
+        padding-left: 50%; /* Beri ruang untuk label */
         border-bottom: 1px solid #eee;
         position: relative;
     }
-
-    table td::before {
-        content: attr(data-label); /* Ambil label dari atribut data-label */
+    #tabel-siswa td::before {
+        display: block; /* Tampilkan kembali pseudo-element hanya di mobile */
+        content: attr(data-label);
         position: absolute;
         left: 12px;
+        width: calc(50% - 24px);
         font-weight: bold;
         text-align: left;
+        color: #333;
     }
-
-    table td:last-child {
+    #tabel-siswa td:last-child {
         border-bottom: 0;
-    }
-
-    /* Khusus untuk daftar hadir, tetap scroll ke samping */
-    .preview-container table {
-        border: 1px solid #ccc;
-    }
-    .preview-container thead {
-        display: table-header-group;
-    }
-    .preview-container tr, .preview-container td {
-        display: table-row; /* Kembalikan ke format tabel biasa */
-    }
-    .preview-container td {
-        display: table-cell;
-        text-align: left;
-    }
-    .preview-container td::before {
-        display: none;
     }
 }
