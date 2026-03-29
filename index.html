@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Administrasi Guru SD</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Menggunakan library jsPDF dan html2pdf untuk generate PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Aplikasi Administrasi Guru</h1>
+        <p>Manajemen data guru, siswa, dan dokumen administrasi secara offline.</p>
+    </header>
+
+    <div class="container">
+        <!-- Navigasi Tab -->
+        <div class="tabs">
+            <button class="tab-link active" onclick="openTab(event, 'Guru')">Data Utama</button>
+            <button class="tab-link" onclick="openTab(event, 'Siswa')">Data Siswa</button>
+            <button class="tab-link" onclick="openTab(event, 'Administrasi')">Generate Dokumen</button>
+        </div>
+
+        <!-- Konten Tab: Data Utama (Guru & Sekolah) -->
+        <div id="Guru" class="tab-content active">
+            <h2>Data Utama</h2>
+            <div class="form-section">
+                <h3>Data Guru</h3>
+                <form id="form-guru">
+                    <input type="text" id="nama-guru" placeholder="Nama Guru" required>
+                    <input type="text" id="kelas" placeholder="Kelas yang Diajar (Contoh: IV A)" required>
+                    <input type="text" id="tahun-ajaran" placeholder="Tahun Ajaran (Contoh: 2023/2024)" required>
+                    <input type="text" id="semester" placeholder="Semester (Contoh: Ganjil)" required>
+                    <button type="submit">Simpan Data Guru</button>
+                </form>
+            </div>
+            <div class="form-section">
+                <h3>Data Sekolah</h3>
+                <form id="form-sekolah">
+                    <input type="text" id="nama-sekolah" placeholder="Nama Sekolah" required>
+                    <input type="text" id="alamat-sekolah" placeholder="Alamat Sekolah" required>
+                    <input type="text" id="kepala-sekolah" placeholder="Nama Kepala Sekolah" required>
+                     <label for="logo-sekolah">Upload Logo Sekolah:</label>
+                    <input type="file" id="logo-sekolah" accept="image/*">
+                    <button type="submit">Simpan Data Sekolah</button>
+                </form>
+                 <img id="logo-preview" src="" alt="Logo Preview" style="display:none; max-width: 150px; margin-top: 10px;">
+            </div>
+        </div>
+
+        <!-- Konten Tab: Data Siswa -->
+        <div id="Siswa" class="tab-content">
+            <h2>Manajemen Data Siswa</h2>
+            <div class="form-section">
+                 <h3>Tambah Siswa Baru</h3>
+                <form id="form-siswa">
+                    <input type="text" id="nama-siswa" placeholder="Nama Lengkap Siswa" required>
+                    <input type="text" id="nis-siswa" placeholder="NIS/NISN" required>
+                    <label for="tgl-lahir-siswa">Tanggal Lahir:</label>
+                    <input type="date" id="tgl-lahir-siswa" required>
+                    <button type="submit">Tambah Siswa</button>
+                </form>
+            </div>
+             <div class="form-section">
+                <h3>Import Siswa dari CSV</h3>
+                <p>Format CSV: Nama,NIS,TanggalLahir (YYYY-MM-DD). Tanpa header.</p>
+                <input type="file" id="import-csv" accept=".csv">
+                <button onclick="handleImportCSV()">Import CSV</button>
+            </div>
+            <div class="table-container">
+                <h3>Daftar Siswa</h3>
+                <table id="tabel-siswa">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Siswa</th>
+                            <th>NIS/NISN</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data siswa akan diisi oleh JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Konten Tab: Administrasi -->
+        <div id="Administrasi" class="tab-content">
+            <h2>Generate Dokumen Administrasi</h2>
+            <p>Klik "Generate" untuk melihat preview, lalu "Download" untuk mengunduh sebagai PDF.</p>
+            <div class="doc-list">
+                <!-- Template untuk setiap dokumen -->
+                <div class="doc-item">
+                    <h3>Daftar Hadir Siswa</h3>
+                    <button onclick="generateDoc('daftar-hadir')">Generate</button>
+                    <button onclick="downloadPDF('preview-daftar-hadir', 'Daftar-Hadir.pdf')">Download</button>
+                </div>
+                <div class="doc-item">
+                    <h3>Jurnal Harian Guru</h3>
+                    <button onclick="generateDoc('jurnal-harian')">Generate</button>
+                    <button onclick="downloadPDF('preview-jurnal-harian', 'Jurnal-Harian.pdf')">Download</button>
+                </div>
+                 <div class="doc-item">
+                    <h3>Program Tahunan (Prota)</h3>
+                    <button onclick="generateDoc('prota')">Generate</button>
+                    <button onclick="downloadPDF('preview-prota', 'Prota.pdf')">Download</button>
+                </div>
+                 <div class="doc-item">
+                    <h3>Program Semester (Prosem)</h3>
+                    <button onclick="generateDoc('prosem')">Generate</button>
+                    <button onclick="downloadPDF('preview-prosem', 'Prosem.pdf')">Download</button>
+                </div>
+                <!-- Tambahkan dokumen lain di sini -->
+            </div>
+
+            <hr>
+
+            <!-- Area Preview Dokumen -->
+            <div id="preview-container" class="preview-container">
+                <h2>Preview Dokumen</h2>
+                <!-- Preview akan ditampilkan di sini -->
+                <div id="preview-content">Pilih dokumen untuk digenerate.</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
