@@ -33,11 +33,14 @@ h2, h3 {
     color: #0056b3;
 }
 
-/* Tab Navigation */
+/* Tab Navigation (SUDAH DIPERBAIKI) */
 .tabs {
     display: flex;
     border-bottom: 2px solid #dee2e6;
     margin-bottom: 20px;
+    background-color: #f8f9fa; /* Tambahkan latar belakang untuk tab */
+    border-radius: 8px 8px 0 0;
+    overflow: hidden; /* Pastikan border-radius terlihat */
 }
 
 .tab-link {
@@ -48,16 +51,21 @@ h2, h3 {
     font-size: 1.1em;
     transition: all 0.3s ease;
     border-bottom: 3px solid transparent;
+    color: #495057; /* Ubah warna teks default agar terlihat */
+    flex-grow: 1; /* Agar tab mengisi lebar */
+    text-align: center;
 }
 
 .tab-link:hover {
     background-color: #e9ecef;
+    color: #007bff; /* Teks jadi biru saat di-hover */
 }
 
 .tab-link.active {
     color: #007bff;
     border-bottom: 3px solid #007bff;
     font-weight: bold;
+    background-color: #ffffff; /* Latar belakang tab aktif */
 }
 
 .tab-content {
