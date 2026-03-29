@@ -9,63 +9,68 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 0 auto;
+    padding: 0;
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
 }
 
 header {
     background-color: #007bff;
     color: white;
-    padding: 20px;
+    padding: 20px 15px;
     text-align: center;
-    border-radius: 8px 8px 0 0;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2em;
+    font-size: 1.8em;
+}
+
+header p {
+    margin: 5px 0 0;
+}
+
+.content-wrapper {
+    padding: 15px;
 }
 
 h2, h3 {
     color: #0056b3;
 }
 
-/* Tab Navigation (SUDAH DIPERBAIKI) */
+/* Tab Navigation */
 .tabs {
     display: flex;
+    background-color: #f8f9fa;
     border-bottom: 2px solid #dee2e6;
-    margin-bottom: 20px;
-    background-color: #f8f9fa; /* Tambahkan latar belakang untuk tab */
-    border-radius: 8px 8px 0 0;
-    overflow: hidden; /* Pastikan border-radius terlihat */
+    overflow-x: auto; /* Memungkinkan scroll tab jika tidak muat */
+    -webkit-overflow-scrolling: touch; /* Scroll halus di iOS */
 }
 
 .tab-link {
     background-color: transparent;
     border: none;
-    padding: 15px 25px;
+    padding: 15px;
     cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1em;
     transition: all 0.3s ease;
-    border-bottom: 3px solid transparent;
-    color: #495057; /* Ubah warna teks default agar terlihat */
-    flex-grow: 1; /* Agar tab mengisi lebar */
+    color: #495057;
     text-align: center;
+    white-space: nowrap; /* Mencegah teks menu patah ke bawah */
+    flex-shrink: 0; /* Mencegah tab menyusut */
 }
 
 .tab-link:hover {
     background-color: #e9ecef;
-    color: #007bff; /* Teks jadi biru saat di-hover */
+    color: #007bff;
 }
 
 .tab-link.active {
     color: #007bff;
     border-bottom: 3px solid #007bff;
     font-weight: bold;
-    background-color: #ffffff; /* Latar belakang tab aktif */
+    background-color: #ffffff;
 }
 
 .tab-content {
@@ -120,43 +125,14 @@ button:hover {
 
 button.delete-btn {
     background-color: #dc3545;
-}
-
-button.delete-btn:hover {
-    background-color: #c82333;
-}
-
-/* Table Styling */
-.table-container {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-thead {
-    background-color: #007bff;
-    color: white;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f8f9fa;
+    padding: 8px 12px;
 }
 
 /* Document Generation */
 .doc-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 15px;
 }
 
 .doc-item {
@@ -167,75 +143,120 @@ tbody tr:nth-child(even) {
     text-align: center;
 }
 
-.doc-item h3 {
-    margin-top: 0;
-}
-
 .doc-item button {
     margin: 5px;
 }
 
 .preview-container {
     margin-top: 30px;
-    padding: 20px;
+    padding: 10px;
     border: 1px dashed #ccc;
     border-radius: 8px;
-    min-height: 300px;
+    min-height: 200px;
+    overflow-x: auto;
 }
 
 /* Document Preview Styling */
 .doc-preview {
-    border: 1px solid #ccc;
-    padding: 20px;
+    padding: 10px;
     background: white;
 }
 .doc-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid black;
     padding-bottom: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 .doc-header img {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: 50px;
+    max-height: 50px;
 }
 .doc-header-text {
     text-align: center;
+    flex-grow: 1;
+    padding: 0 10px;
 }
-.doc-header-text h4,.doc-header-text p {
+.doc-header-text h4, .doc-header-text p {
     margin: 0;
+    font-size: 0.8em;
 }
-.doc-title {
-    text-align: center;
-    margin: 20px 0;
-    font-weight: bold;
-    font-size: 1.2em;
-    text-transform: uppercase;
-}
-.info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-bottom: 20px;
-}
-.info-grid div {
-    padding: 5px;
+.doc-header-text h3 {
+    font-size: 1em;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-   .tabs {
-        flex-direction: column;
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    margin-bottom: 15px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Responsive Table Styling (The Magic for Mobile!) */
+@media screen and (max-width: 768px) {
+    .container {
+        box-shadow: none;
+        border-radius: 0;
     }
-   .tab-link {
-        text-align: left;
-        border-bottom: 1px solid #eee;
-    }
-   .tab-link.active {
-        border-bottom: 3px solid #007bff;
-    }
-   .info-grid {
+
+    .doc-list {
         grid-template-columns: 1fr;
+    }
+
+    table {
+        border: 0;
+    }
+
+    table thead {
+        display: none; /* Sembunyikan header tabel di mobile */
+    }
+
+    table tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    table td {
+        display: block;
+        text-align: right; /* Posisikan data di kanan */
+        padding: 8px 12px;
+        border-bottom: 1px solid #eee;
+        position: relative;
+    }
+
+    table td::before {
+        content: attr(data-label); /* Ambil label dari atribut data-label */
+        position: absolute;
+        left: 12px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
+
+    /* Khusus untuk daftar hadir, tetap scroll ke samping */
+    .preview-container table {
+        border: 1px solid #ccc;
+    }
+    .preview-container thead {
+        display: table-header-group;
+    }
+    .preview-container tr, .preview-container td {
+        display: table-row; /* Kembalikan ke format tabel biasa */
+    }
+    .preview-container td {
+        display: table-cell;
+        text-align: left;
+    }
+    .preview-container td::before {
+        display: none;
     }
 }
